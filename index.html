@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Button That Does Nothing</title>
+<meta name="description" content="It's a button. It does nothing. Press it anyway.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="canonical" href="https://buttonthatdoesnothing.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://buttonthatdoesnothing.com/">
+<meta property="og:title" content="Button That Does Nothing">
+<meta property="og:description" content="It's a button. It does nothing. Press it anyway.">
+<meta property="og:image" content="https://buttonthatdoesnothing.com/assets/meme.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #111111;
+    --muted: #6b6b6b;
+    --red: #e3170a;
+    --gutter: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100svh;
+    padding: max(12px, env(safe-area-inset-top)) var(--gutter) max(12px, env(safe-area-inset-bottom));
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+  }
+
+  main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 3vh, 28px);
+  }
+
+  /* The picture: fits width on phones, fits height on short/wide screens */
+  .stage {
+    position: relative;
+    width: min(100%, 900px, calc((100svh - 190px) * 640 / 472));
+    min-width: min(100%, 280px);
+    aspect-ratio: 640 / 472;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .stage img { display: block; pointer-events: none; -webkit-user-drag: none; }
+  .plate { width: 100%; height: 100%; }
+
+  /* The button, cut out of the picture and placed exactly where it was */
+  .big-button {
+    position: absolute;
+    left: 11.25%;
+    top: 45.55%;
+    width: 55.94%;
+    height: 45.13%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    clip-path: polygon(38.3% 0%, 69.3% 7%, 82.4% 14.1%, 88% 21.1%, 90.2% 28.2%, 92.7% 35.2%, 94.7% 42.3%, 96.4% 49.3%, 97.8% 56.3%, 98.9% 63.4%, 99.7% 70.4%, 99.4% 77.5%, 98% 84.5%, 92.5% 91.5%, 79.9% 100%, 52.2% 100%, 14.8% 91.5%, 5% 84.5%, 0.6% 77.5%, 0% 70.4%, 0.8% 63.4%, 2% 56.3%, 2.8% 49.3%, 4.2% 42.3%, 5.3% 35.2%, 6.1% 28.2%, 8.1% 21.1%, 12% 14.1%, 17% 7%, 30.7% 0%);
+  }
+  .big-button img {
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 92%;
+    transition: transform 260ms cubic-bezier(.34, 1.8, .5, 1), filter 160ms ease;
+  }
+  .big-button:hover img { filter: brightness(1.06) saturate(1.05); }
+  .big-button:focus-visible img { filter: brightness(1.12) saturate(1.1); }
+  .big-button:focus { outline: none; }
+  .big-button.pressed img {
+    transform: scaleY(.84) scaleX(1.015);
+    filter: brightness(.88);
+    transition: transform 60ms ease-out, filter 60ms ease-out;
+  }
+
+  /* Fixed single-line height so the picture never shifts when the text changes */
+  .message {
+    font-family: Anton, Impact, "Arial Narrow Bold", sans-serif;
+    font-size: clamp(1.5rem, 5.2vw, 2.6rem);
+    line-height: 1.2;
+    height: 1.2em;
+    white-space: nowrap;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+  }
+  .message.bump { animation: bump 220ms ease-out; }
+  @keyframes bump {
+    0% { transform: scale(.92); opacity: .4; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  footer {
+    color: var(--muted);
+    font-size: .8rem;
+    text-align: center;
+    padding-top: 12px;
+  }
+  footer button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .big-button img, .big-button.pressed img { transition: none; }
+    .message.bump { animation: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1 class="visually-hidden">Button That Does Nothing</h1>
+
+  <div class="stage">
+    <img class="plate" src="assets/plate.png" alt="A crudely drawn man with glasses stares at a big red button on a table." width="640" height="472">
+    <button class="big-button" id="btn" type="button" aria-label="Button that does nothing" aria-describedby="message">
+      <img src="assets/button.png" alt="" width="358" height="213">
+    </button>
+  </div>
+
+  <p class="message" id="message" aria-live="polite">Press it.</p>
+</main>
+
+<footer>
+  <button id="mute" type="button" aria-pressed="false">sound on</button>
+</footer>
+
+<script>
+(() => {
+  const btn = document.getElementById('btn');
+  const msg = document.getElementById('message');
+  const muteBtn = document.getElementById('mute');
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+  };
+
+  let muted = store.get('btdn-muted', '0') === '1';
+
+  const lines = ['Nothing.', 'Nothing happened.', 'Still nothing.', 'Nope.', 'Nothing again.'];
+  let last = -1;
+  function nextLine() {
+    let i;
+    do { i = Math.floor(Math.random() * lines.length); } while (i === last);
+    return lines[(last = i)];
+  }
+
+  function renderMute() {
+    muteBtn.textContent = muted ? 'sound off' : 'sound on';
+    muteBtn.setAttribute('aria-pressed', String(muted));
+  }
+
+  // A short, chunky "clack" synthesized on the fly
+  let ctx;
+  function clack() {
+    if (muted) return;
+    try {
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      const t = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(180, t);
+      osc.frequency.exponentialRampToValueAtTime(60, t + 0.09);
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.5, t + 0.005);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.13);
+    } catch {}
+  }
+
+  function press() {
+    btn.classList.add('pressed');
+    clack();
+    if (navigator.vibrate) navigator.vibrate(12);
+  }
+  function release(counted) {
+    if (!btn.classList.contains('pressed')) return;
+    btn.classList.remove('pressed');
+    if (!counted) return;
+    msg.textContent = nextLine();
+    msg.classList.remove('bump');
+    void msg.offsetWidth;
+    msg.classList.add('bump');
+  }
+
+  btn.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    btn.setPointerCapture(e.pointerId);
+    press();
+  });
+  btn.addEventListener('pointerup', () => release(true));
+  btn.addEventListener('pointercancel', () => release(false));
+  btn.addEventListener('keydown', e => {
+    if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); press(); }
+  });
+  btn.addEventListener('keyup', e => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); release(true); }
+  });
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+
+  muteBtn.addEventListener('click', () => {
+    muted = !muted;
+    store.set('btdn-muted', muted ? '1' : '0');
+    renderMute();
+  });
+
+  renderMute();
+})();
+</script>
+</body>
+</html>
